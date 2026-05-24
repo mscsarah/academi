@@ -359,12 +359,11 @@
   .pdf-viewer-container {
     flex: 1;
     position: relative;
-    background: #e2e8f4; /* Neutral background for PDF viewer */
+    background: #e2e8f4;
     width: 100%;
-    overflow: hidden; /* Important for security layer */
+    overflow: hidden; 
   }
 
-  /* The iframe for the PDF */
   .pdf-iframe {
     width: 100%;
     height: 100%;
@@ -372,7 +371,6 @@
     pointer-events: auto;
   }
 
-  /* Overlay to prevent right clicks & dragging (Security layer) */
   .pdf-security-layer {
     position: absolute;
     top: 0;
@@ -381,24 +379,22 @@
     bottom: 0;
     background: transparent;
     z-index: 10;
-    /* Allows scrolling but prevents clicking/selecting text in some browsers */
     pointer-events: none; 
   }
 
-  /* Block the top toolbar specifically */
   .pdf-toolbar-blocker {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 55px; /* Adjust based on browser toolbar height */
-    background: rgba(0,0,0,0.01); /* Invisible blocker */
+    height: 55px; 
+    background: rgba(0,0,0,0.01); 
     z-index: 20;
-    pointer-events: auto; /* Catch clicks */
+    pointer-events: auto; 
   }
 
   /* ==========================================
-     EMPTY STATES (For wiped content)
+     EMPTY STATES
   ========================================== */
   .empty-content-state {
     text-align: center;
@@ -427,7 +423,6 @@
      PAGE 1: LANDING PAGE
   ========================================== */
 
-  /* Hero */
   .hero {
     min-height: 100vh;
     background: linear-gradient(135deg, var(--primary) 0%, #0d1f3c 50%, #091628 100%);
@@ -549,8 +544,6 @@
   .device-dot:nth-child(1) { background: #ff5f57; }
   .device-dot:nth-child(2) { background: #febc2e; }
   .device-dot:nth-child(3) { background: #28c840; }
-
-  .device-body {}
 
   .device-question {
     background: rgba(26,111,255,0.1);
@@ -2103,6 +2096,7 @@
 </div>
 </footer>
 </div>
+
 <!-- ===================================
      PAGE 2: STAGES
 =================================== -->
@@ -2239,7 +2233,7 @@
 <div class="tab-content" id="tab-questions">
   <div class="book-showcase">
     <!-- Book 2: الأسئلة الوزارية (الملف الكامل) - MOVED HERE -->
-    <div class="book-wrapper" onclick="openPDF('الاسلامية الملف الكامل.pdf', 'الأسئلة الوزارية الشاملة - التربية الإسلامية')">
+    <div class="book-wrapper" onclick="openPDF('islamic_questions.pdf', 'الأسئلة الوزارية الشاملة - التربية الإسلامية')">
       <div class="book-3d">
         <div class="book-front" style="background: linear-gradient(135deg, #b45309, #7c2d12);">
           <div style="font-size: 40px; margin-bottom: 10px;">📋</div>
@@ -2256,7 +2250,7 @@
   </div>
 </div>
 
-<!-- Videos Tab (Emptied as requested) -->
+<!-- Videos Tab -->
 <div class="tab-content" id="tab-videos">
   <div class="empty-content-state">
      <div class="icon">🎥</div>
@@ -2269,7 +2263,7 @@
 <div class="tab-content active" id="tab-files">
   <div class="book-showcase">
     <!-- Book 1: طريق النجاح -->
-    <div class="book-wrapper" onclick="openPDF('التربية_الاسلامية_طريق_النجاح_الدور_الاول_2026.pdf', 'ملزمة التربية الإسلامية - طريق النجاح')">
+    <div class="book-wrapper" onclick="openPDF('islamic_notes.pdf', 'ملزمة التربية الإسلامية - طريق النجاح')">
       <div class="book-3d">
         <div class="book-front" style="background: linear-gradient(135deg, #0f766e, #064e3b);">
           <div style="font-size: 40px; margin-bottom: 10px;">🕋</div>
