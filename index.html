@@ -361,6 +361,387 @@
   }
 
   /* ===== HERO SLIDESHOW ===== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 70px;
+  }
+
+  .hero-content {
+    position: relative; z-index: 5;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    width: 100%; max-width: 1300px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .hero-text h1 {
+    font-size: 58px; font-weight: 900;
+    line-height: 1.2; margin-bottom: 20px;
+  }
+
+  .hero-text h1 span { color: var(--gold); }
+
+  .hero-text p {
+    font-size: 18px; color: var(--gray-400);
+    margin-bottom: 30px; line-height: 1.8;
+  }
+
+  .hero-btns {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .hero-stats {
+    display: flex; gap: 30px; flex-wrap: wrap;
+  }
+
+  .hero-stat-item { text-align: center; }
+
+  .hero-stat-num {
+    display: block; font-size: 28px; font-weight: 900;
+    color: var(--gold);
+  }
+
+  .hero-stat-label {
+    font-size: 13px; color: var(--gray-400);
+  }
+
+  .hero-visual {
+    position: relative; z-index: 5;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ===== SUBJECT PAGE ===== */
+  .subject-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .subject-icon-big {
+    font-size: 52px;
+    flex-shrink: 0;
+  }
+
+  .subject-header-text h1 {
+    font-size: 26px; font-weight: 900;
+    margin-bottom: 6px;
+  }
+
+  .subject-header-text p {
+    color: var(--gray-400); font-size: 14px;
+  }
+
+  /* ===== TABS ===== */
+  .tabs-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 0;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 10px 22px;
+    border-radius: 10px 10px 0 0;
+    background: transparent;
+    border: 1px solid transparent;
+    border-bottom: none;
+    color: var(--gray-400);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: -1px;
+  }
+
+  .tab-btn:hover { color: var(--white); background: var(--glass); }
+
+  .tab-btn.active {
+    background: var(--primary-light);
+    border-color: var(--glass-border);
+    border-bottom-color: var(--primary-light);
+    color: var(--white);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeInPage 0.4s ease; }
+
+  /* ===== EXAM PAGE ===== */
+  .exam-page {
+    min-height: 100vh;
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .exam-header {
+    background: var(--primary-mid);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 16px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .exam-title-bar {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+
+  .exam-subject-tag {
+    background: rgba(26,111,255,0.2);
+    border: 1px solid rgba(26,111,255,0.3);
+    border-radius: 20px; padding: 4px 14px;
+    font-size: 13px; font-weight: 700; color: var(--accent-light);
+  }
+
+  .exam-name { font-size: 18px; font-weight: 800; }
+
+  .exam-meta-bar {
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  }
+
+  .exam-meta-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--gray-400);
+  }
+
+  .exam-timer-big {
+    font-size: 22px; font-weight: 900; color: var(--gold);
+    font-variant-numeric: tabular-nums;
+    margin-right: auto;
+  }
+
+  .exam-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 0;
+    max-height: calc(100vh - 130px);
+    overflow: hidden;
+  }
+
+  .exam-main {
+    padding: 30px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .exam-question-nav {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .eq-num { font-size: 18px; font-weight: 900; white-space: nowrap; }
+  .eq-progress-text { font-size: 13px; color: var(--gray-400); white-space: nowrap; }
+  .flex-1 { flex: 1; }
+
+  .exam-question-text {
+    font-size: 20px; font-weight: 700;
+    line-height: 1.7;
+    padding: 24px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+  }
+
+  .exam-choices {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+
+  .exam-choice {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 20px;
+    background: var(--glass);
+    border: 1.5px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer; font-size: 16px; font-weight: 600;
+    transition: var(--transition);
+  }
+
+  .exam-choice:hover { border-color: var(--accent); background: rgba(26,111,255,0.1); }
+  .exam-choice.selected { border-color: var(--accent); background: rgba(26,111,255,0.18); color: var(--white); }
+
+  .choice-letter {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--primary-light);
+    border: 1.5px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 15px; flex-shrink: 0;
+  }
+
+  .exam-choice.selected .choice-letter {
+    background: var(--accent); border-color: var(--accent);
+  }
+
+  .exam-nav-btns {
+    display: flex; gap: 14px; justify-content: space-between;
+    margin-top: auto;
+  }
+
+  .exam-sidebar {
+    background: var(--primary-mid);
+    border-right: 1px solid var(--glass-border);
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .exam-sidebar h4 {
+    font-size: 15px; font-weight: 800;
+    margin-bottom: 10px;
+  }
+
+  .questions-map {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+
+  .qmap-item {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--glass); border: 1.5px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .qmap-item.answered { background: rgba(26,111,255,0.25); border-color: var(--accent); }
+  .qmap-item.current { background: var(--accent); border-color: var(--accent); color: white; }
+
+  .exam-summary { margin-top: auto; }
+
+  .exam-summary-item {
+    display: flex; justify-content: space-between;
+    font-size: 14px; margin-bottom: 14px;
+  }
+
+  .exam-summary-item .label { color: var(--gray-400); }
+  .exam-summary-item .value { font-weight: 800; }
+  .ev-answered { color: var(--accent-light); }
+
+  .exam-submit-btn {
+    width: 100%; padding: 12px;
+    background: linear-gradient(135deg, var(--success), #059669);
+    border: none; border-radius: var(--radius-sm);
+    color: white; font-family: 'Cairo', sans-serif;
+    font-size: 15px; font-weight: 800; cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .exam-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(16,185,129,0.4); }
+
+  /* ===== RESULTS OVERLAY ===== */
+  .results-overlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+    display: none; align-items: center; justify-content: center;
+  }
+  .results-overlay.show { display: flex; }
+
+  .results-card {
+    background: var(--primary-mid);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 50px 40px;
+    text-align: center; max-width: 480px; width: 90%;
+  }
+
+  .results-score-ring {
+    width: 140px; height: 140px; border-radius: 50%;
+    background: conic-gradient(var(--accent) 0deg, rgba(255,255,255,0.1) 0deg);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    border: 4px solid var(--accent);
+    box-shadow: 0 0 40px rgba(26,111,255,0.4);
+  }
+
+  .results-score-text { font-size: 28px; font-weight: 900; }
+  .results-score-text span:last-child { font-size: 16px; color: var(--gray-400); }
+  .results-title { font-size: 24px; font-weight: 900; margin-bottom: 8px; }
+  .results-sub { color: var(--gray-400); margin-bottom: 24px; }
+  .results-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .mt-8 { margin-top: 32px; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1500;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+
+  .modal-card {
+    background: var(--primary-mid); border: 1px solid var(--glass-border);
+    border-radius: 20px; padding: 40px; max-width: 440px; width: 90%;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 8px; width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--white); font-size: 16px;
+    transition: var(--transition);
+  }
+
+  .modal-close:hover { background: rgba(239,68,68,0.2); border-color: var(--danger); }
+
+  .modal-logo { text-align: center; margin-bottom: 30px; }
+  .modal-logo h2 { font-size: 22px; font-weight: 900; margin: 12px 0 6px; }
+  .modal-logo p { color: var(--gray-400); font-size: 14px; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-input {
+    width: 100%; padding: 12px 16px;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm); color: var(--white);
+    font-family: 'Cairo', sans-serif; font-size: 15px;
+    transition: var(--transition);
+  }
+  .form-input:focus { outline: none; border-color: var(--accent); }
+  .form-input::placeholder { color: var(--gray-400); }
+
+  .flex-center { display: flex; align-items: center; justify-content: center; }
+  .py-3 { padding-top: 12px; padding-bottom: 12px; }
+  .w-full { width: 100%; }
+  .text-black { color: #000 !important; }
+  .mb-4 { margin-bottom: 16px; }
+  .ml-4 { margin-left: 16px; }
+  .mr-4 { margin-right: 16px; }
+
+  /* ===== QUESTIONS GRID ===== */
+  .questions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    padding: 10px 0;
+  }
+
+  /* ===== SCROLL TOP ===== */
+  .scroll-top {
+    position: fixed; bottom: 30px; left: 30px; z-index: 900;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--accent); border: none; color: white;
+    font-size: 18px; cursor: pointer; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(26,111,255,0.4);
+  }
+  .scroll-top:hover { transform: translateY(-4px); }
+
+  /* ===== HERO SLIDESHOW ===== */
   .hero-slideshow {
     position: absolute; inset: 0; z-index: 0;
     overflow: hidden;
@@ -474,7 +855,8 @@
 <div class="navbar-links">
 <button class="active" id="nav-landing" onclick="showPage('landing')">الرئيسية</button>
 <button id="nav-stages" onclick="showPage('stages')">المراحل الدراسية</button>
-<button id="nav-subject" onclick="showPage('subject')">المواد</button>
+<button id="nav-subject" onclick="showPage('subject')">🕋 الإسلامية</button>
+<button id="nav-arabic" onclick="showPage('arabic')">📖 العربية</button>
 <button id="nav-pricing" onclick="showPage('pricing')">الاشتراكات</button>
 <button id="nav-dashboard" onclick="showPage('dashboard')">لوحة الطالب</button>
 <button id="nav-ai" onclick="showPage('ai')">🤖 الذكاء الاصطناعي</button>
@@ -714,18 +1096,33 @@
     <div class="book-action"><button class="btn btn-blue btn-sm w-full">دخول للمرحلة</button></div>
   </div>
 
-  <!-- Stage 5 -->
+  <!-- Stage 5 - المهني - Islamic -->
   <div class="book-wrapper" onclick="showPage('subject')">
     <div class="book-3d">
       <div class="book-front" style="background: linear-gradient(135deg, #4338ca, #0f172a);">
-        <div style="font-size: 40px; margin-bottom: 10px;">💻</div>
+        <div style="font-size: 40px; margin-bottom: 10px;">🕋</div>
         <div class="book-front-title" style="font-size:18px;">السادس المهني</div>
-        <div class="book-front-sub">٦ مواد | ١٤٠٠ سؤال</div>
+        <div class="book-front-sub">التربية الإسلامية</div>
       </div>
       <div class="book-spine" style="background: #1e1b4b;"></div>
       <div class="book-pages"></div>
     </div>
-    <div class="book-action"><button class="btn btn-blue btn-sm w-full">دخول للمرحلة</button></div>
+    <div class="book-action"><button class="btn btn-blue btn-sm w-full">دخول للمادة</button></div>
+  </div>
+
+  <!-- Stage 6 - المهني - Arabic -->
+  <div class="book-wrapper" onclick="showPage('arabic')">
+    <div class="book-3d">
+      <div class="book-front" style="background: linear-gradient(135deg, #1e40af, #1e3a8a);">
+        <div style="font-size: 11px; background:var(--gold); color:#000; padding:2px 8px; border-radius:10px; margin-bottom:5px; font-weight:bold;">جديد ✨</div>
+        <div style="font-size: 36px; margin-bottom: 5px;">📖</div>
+        <div class="book-front-title" style="font-size:18px;">السادس المهني</div>
+        <div class="book-front-sub">اللغة العربية</div>
+      </div>
+      <div class="book-spine" style="background: #0f1f5c;"></div>
+      <div class="book-pages"></div>
+    </div>
+    <div class="book-action"><button class="btn btn-gold btn-sm w-full text-black">دخول للمادة</button></div>
   </div>
 </div>
 </div>
@@ -823,6 +1220,134 @@
 </div>
 </div>
 
+
+<!-- ===================================
+     PAGE: ARABIC SUBJECT
+=================================== -->
+<div class="page" id="page-arabic">
+<div class="section">
+<div class="subject-header">
+<div class="subject-icon-big">📖</div>
+<div class="subject-header-text">
+<h1>اللغة العربية - السادس المهني / كافة الأقسام</h1>
+<p>الأسئلة الوزارية الشاملة | ملزمة طريق النجاح | اختبارات تفاعلية</p>
+</div>
+<div>
+<span class="badge badge-gold">محدث لعام ٢٠٢٦</span>
+<button class="btn btn-blue btn-sm" onclick="startArabicExam('full')">📝 ابدأ اختباراً</button>
+</div>
+</div>
+<div class="tabs-bar">
+<button class="tab-btn" onclick="switchTabAr('ar-questions', this)">📋 الأسئلة الوزارية</button>
+<button class="tab-btn active" onclick="switchTabAr('ar-files', this)">📁 الملازم (3D)</button>
+<button class="tab-btn" onclick="switchTabAr('ar-exams', this)">⚡ الاختبارات</button>
+</div>
+
+<div class="tab-content" id="tab-ar-questions">
+  <div class="book-showcase">
+    <div class="book-wrapper" onclick="openPDF('arabic.pdf', 'نماذج أسئلة وزارية - اللغة العربية')">
+      <div class="book-3d">
+        <div class="book-front" style="background: linear-gradient(135deg, #b45309, #7c2d12);">
+          <div style="font-size: 40px; margin-bottom: 10px;">📋</div>
+          <div class="book-front-title">اللغة العربية</div>
+          <div class="book-front-sub">نماذج وزارية للسنوات السابقة</div>
+        </div>
+        <div class="book-spine" style="background: #431407;"></div>
+        <div class="book-pages"></div>
+      </div>
+      <div class="book-action"><button class="btn btn-gold text-black w-full">📖 تصفح الأسئلة</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-content active" id="tab-ar-files">
+  <div class="book-showcase">
+    <div class="book-wrapper" onclick="openPDF('arabic.pdf', 'ملزمة اللغة العربية - طريق النجاح - السادس المهني')">
+      <div class="book-3d">
+        <div class="book-front" style="background: linear-gradient(135deg, #1e40af, #1e3a8a);">
+          <div style="font-size: 40px; margin-bottom: 10px;">📖</div>
+          <div class="book-front-title">اللغة العربية</div>
+          <div class="book-front-sub">طريق النجاح<br>الأستاذة سارة مزهر<br>السادس المهني ٢٠٢٦</div>
+        </div>
+        <div class="book-spine" style="background: #0f1f5c;"></div>
+        <div class="book-pages"></div>
+      </div>
+      <div class="book-action"><button class="btn btn-blue w-full">📖 تصفح الملزمة</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-content" id="tab-ar-exams">
+<div class="questions-grid">
+<div class="glass-card" onclick="startArabicExam('grammar')" style="text-align: center; padding: 25px; cursor: pointer;">
+<div style="font-size: 36px">✍️</div>
+<div style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">اختبار القواعد والتطبيق</div>
+<div style="font-size: 13px; color: var(--gray-400); margin-bottom: 15px;">اسم الفاعل، اسم المفعول، الصفة المشبهة، المشتقات</div>
+<button class="btn btn-blue btn-sm" style="width:100%;">ابدأ الاختبار الآن</button>
+</div>
+<div class="glass-card" onclick="startArabicExam('literature')" style="text-align: center; padding: 25px; cursor: pointer;">
+<div style="font-size: 36px">📜</div>
+<div style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">اختبار الأدب والنصوص</div>
+<div style="font-size: 13px; color: var(--gray-400); margin-bottom: 15px;">الشعر، النثر، الأدباء، المدارس الأدبية</div>
+<button class="btn btn-blue btn-sm" style="width:100%;">ابدأ الاختبار الآن</button>
+</div>
+<div class="glass-card" onclick="startArabicExam('full')" style="text-align: center; padding: 25px; cursor: pointer; border-color: var(--gold);">
+<div style="font-size: 36px">🏆</div>
+<div style="font-size: 18px; font-weight: 800; margin-bottom: 5px; color: var(--gold);">الاختبار الشامل - نمط وزاري</div>
+<div style="font-size: 13px; color: var(--gray-400); margin-bottom: 15px;">امتحان شامل من أسئلة وزارية حقيقية</div>
+<button class="btn btn-gold btn-sm text-black" style="width:100%;">ابدأ الاختبار الشامل</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===================================
+     PAGE: ARABIC EXAM
+=================================== -->
+<div class="page" id="page-arabic-exam">
+<div class="exam-page">
+<div class="exam-header">
+<div class="exam-title-bar">
+<span class="exam-subject-tag">📖 اللغة العربية</span>
+<span class="exam-name" id="arabicExamName">اختبار شامل</span>
+</div>
+<div class="exam-meta-bar">
+<div class="exam-meta-item"><span class="exam-meta-icon">📋</span> <span id="arTotalQ">١٥</span> أسئلة</div>
+<div class="exam-timer-big">٤٥:٠٠</div>
+<button class="btn btn-outline btn-sm" onclick="showPage('arabic')">✕ إنهاء</button>
+</div>
+</div>
+<div class="exam-body">
+<div class="exam-main">
+<div class="exam-question-nav">
+<span class="eq-num" id="arCurrentQ">السؤال ١</span>
+<span class="eq-progress-text">من أصل <span id="arTotalQText">١٥</span></span>
+<div class="flex-1 ml-4 mr-4">
+<div class="progress-bar"><div class="progress-fill" id="arProgressFill" style="width: 7%;"></div></div>
+</div>
+</div>
+<div class="exam-question-text" id="arQuestionText">يتم تحميل السؤال...</div>
+<div class="exam-choices" id="arChoices"></div>
+<div class="exam-nav-btns">
+<button class="btn btn-outline" id="arBtnPrev" onclick="arPrevQ()">← السابق</button>
+<button class="btn btn-blue" id="arBtnNext" onclick="arNextQ()">التالي →</button>
+</div>
+</div>
+<div class="exam-sidebar">
+<h4>خريطة الأسئلة</h4>
+<div class="questions-map" id="arQuestionsMap"></div>
+<div class="exam-summary">
+<div class="exam-summary-item">
+<span class="label">✅ أجبت عليها:</span>
+<span class="value ev-answered" id="arAnsweredCount">٠</span>
+</div>
+<button class="exam-submit-btn" onclick="showArabicResults()">✔ تسليم الاختبار</button>
+</div>
+</div>
+</div>
+</div>
+</div>
 <!-- ===================================
      PAGE 4: EXAM (DYNAMIC ISLAMIC)
 =================================== -->
@@ -1026,8 +1551,8 @@
   });
 
   function switchTab(tabName, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('#page-subject .tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#page-subject .tab-content').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
     const content = document.getElementById('tab-' + tabName);
     if (content) content.classList.add('active');
@@ -1153,6 +1678,142 @@
     const finalScore = Math.round((score / examQuestions.length) * 100);
     document.getElementById('finalScoreText').textContent = finalScore;
     document.getElementById('resultsOverlay').classList.add('show');
+  }
+
+
+  // ===== ARABIC SUBJECT TAB SWITCHER =====
+  function switchTabAr(tabName, btn) {
+    document.querySelectorAll('#page-arabic .tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#page-arabic .tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    const content = document.getElementById('tab-' + tabName);
+    if (content) content.classList.add('active');
+  }
+
+  // ===== ARABIC EXAM QUESTIONS =====
+  const arabicQuestionsBank = {
+    grammar: [
+      { q: "اسم الفاعل من الفعل الثلاثي يُشتق على وزن:", options: ["مَفعول", "فاعِل", "فَعّال", "مُفاعِل"], ans: 1 },
+      { q: "ما اسم الفاعل من الفعل (حرس)؟", options: ["محروس", "حارس", "حراس", "مُحارس"], ans: 1 },
+      { q: "ما اسم الفاعل من الفعل (قال)؟ (الفعل معتل الوسط)", options: ["قائل", "قاول", "قول", "مقول"], ans: 0 },
+      { q: "اسم المفعول من الفعل الثلاثي يُشتق على وزن:", options: ["فاعِل", "فَعيل", "مَفعول", "فَعّال"], ans: 2 },
+      { q: "ما اسم المفعول من الفعل (كتب)؟", options: ["كاتب", "مكتوب", "كتّاب", "كتابة"], ans: 1 },
+      { q: "اسم الفاعل من الفعل غير الثلاثي يُشتق بـ:", options: ["وزن فاعل", "إرجاع الفعل إلى المضارع ثم إبدال حرف المضارع ميماً مضمومة وكسر ما قبل الآخر", "وزن مفعول", "زيادة ألف بعد الفاء"], ans: 1 },
+      { q: "ما اسم الفاعل من الفعل (أكرم)؟", options: ["كريم", "مُكرَم", "مُكرِم", "أكرام"], ans: 2 },
+      { q: "الصفة المشبهة تدل على:", options: ["حدث مؤقت", "صفة ثابتة مستمرة", "فعل ماضٍ", "حركة متجددة"], ans: 1 },
+    ],
+    literature: [
+      { q: "ميخائيل نعيمة شاعر لبناني، هاجر إلى أمريكا عام:", options: ["١٨٩٥", "١٩٠٢", "١٨٨٩", "١٩١٠"], ans: 2 },
+      { q: "من مؤلفات ميخائيل نعيمة:", options: ["الأيام", "هَمس الجفون وكتاب الغربال", "البؤساء", "رسالة الغفران"], ans: 1 },
+      { q: "كتاب (شمس المعارف) ألّفه:", options: ["ميخائيل نعيمة", "أحمد شوقي", "عبد الله النديم", "الجواهري"], ans: 2 },
+      { q: "اسم الكاتب الكامل لكتاب (شمس المعارف):", options: ["عبد الله الأفغاني", "عبد الله بن مصباح بن إبراهيم الإدريسي الحسني", "عبد الله الجواهري", "عبد الله الحلي"], ans: 1 },
+      { q: "المدرسة الشعرية التي ينتمي إليها ميخائيل نعيمة:", options: ["مدرسة الإحياء والبعث", "المدرسة الرمزية", "مدرسة المهجر", "مدرسة الديوان"], ans: 2 },
+      { q: "عمران البلاد من الأسباب التي تؤدي إلى نهضة الأمم، هذه الفكرة وردت في نص:", options: ["شمس المعارف", "الجواهري", "سامي البارودي", "ميخائيل نعيمة"], ans: 0 },
+      { q: "قصيدة (وأسماء عمران البلاد تعاون) للشاعر:", options: ["ميخائيل نعيمة", "الجواهري", "أحمد شوقي", "البارودي"], ans: 1 },
+    ],
+    full: [
+      { q: "اسم الفاعل من الفعل الثلاثي يُشتق على وزن:", options: ["مَفعول", "فاعِل", "فَعّال", "مُفاعِل"], ans: 1 },
+      { q: "ما اسم الفاعل من الفعل (حرس)؟", options: ["محروس", "حارس", "حراس", "مُحارس"], ans: 1 },
+      { q: "اسم المفعول من الفعل الثلاثي يُشتق على وزن:", options: ["فاعِل", "فَعيل", "مَفعول", "فَعّال"], ans: 2 },
+      { q: "ميخائيل نعيمة شاعر لبناني هاجر إلى أمريكا عام:", options: ["١٨٩٥", "١٩٠٢", "١٨٨٩", "١٩١٠"], ans: 2 },
+      { q: "من مؤلفات ميخائيل نعيمة:", options: ["الأيام", "هَمس الجفون وكتاب الغربال", "البؤساء", "رسالة الغفران"], ans: 1 },
+      { q: "كتاب (شمس المعارف) ألّفه:", options: ["ميخائيل نعيمة", "أحمد شوقي", "عبد الله النديم", "الجواهري"], ans: 2 },
+      { q: "ما اسم الفاعل من الفعل (قال)؟", options: ["قائل", "قاول", "قول", "مقول"], ans: 0 },
+      { q: "اسم الفاعل من الفعل غير الثلاثي يُشتق بإرجاع الفعل إلى المضارع ثم:", options: ["إضافة تاء التأنيث", "إبدال حرف المضارع ميماً مضمومة وكسر ما قبل الآخر", "إضافة ألف ونون", "تحويله لمصدر"], ans: 1 },
+      { q: "المدرسة الشعرية التي ينتمي إليها ميخائيل نعيمة:", options: ["مدرسة الإحياء والبعث", "المدرسة الرمزية", "مدرسة المهجر", "مدرسة الديوان"], ans: 2 },
+      { q: "الصفة المشبهة تدل على صفة:", options: ["مؤقتة عارضة", "ثابتة مستمرة", "متجددة", "انفعالية"], ans: 1 },
+      { q: "ما اسم المفعول من الفعل (شاهد)؟", options: ["شاهد", "مشهود", "مُشاهَد", "مشهد"], ans: 2 },
+      { q: "قصيدة (وأسماء عمران البلاد تعاون) للشاعر:", options: ["ميخائيل نعيمة", "الجواهري", "أحمد شوقي", "البارودي"], ans: 1 },
+      { q: "اسم الكاتب الكامل لكتاب (شمس المعارف):", options: ["عبد الله الأفغاني", "عبد الله بن مصباح بن إبراهيم الإدريسي الحسني", "عبد الله الجواهري", "عبد الله الحلي"], ans: 1 },
+      { q: "أنشأ عبد الله النديم مجلة (الأستاذ) سنة:", options: ["١٢٩٠هـ", "١٣١٠هـ", "١٢٨٠هـ", "١٣٠٠هـ"], ans: 1 },
+      { q: "ما اسم الفاعل من الفعل (أكرم)؟", options: ["كريم", "مُكرَم", "مُكرِم", "أكرام"], ans: 2 },
+    ]
+  };
+
+  let arCurrentIndex = 0;
+  let arUserAnswers = [];
+  let arActiveQuestions = [];
+
+  function startArabicExam(type) {
+    arActiveQuestions = arabicQuestionsBank[type] || arabicQuestionsBank.full;
+    arCurrentIndex = 0;
+    arUserAnswers = new Array(arActiveQuestions.length).fill(null);
+    const names = { grammar: 'اختبار القواعد والتطبيق', literature: 'اختبار الأدب والنصوص', full: 'الاختبار الشامل (وزاري)' };
+    document.getElementById('arabicExamName').textContent = names[type] || names.full;
+    document.getElementById('arTotalQ').textContent = arActiveQuestions.length;
+    document.getElementById('arTotalQText').textContent = arActiveQuestions.length;
+    buildArMap();
+    renderArQuestion();
+    showPage('arabic-exam');
+  }
+
+  function buildArMap() {
+    const map = document.getElementById('arQuestionsMap');
+    map.innerHTML = '';
+    arActiveQuestions.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'qmap-item';
+      d.textContent = i + 1;
+      d.onclick = () => { arCurrentIndex = i; renderArQuestion(); };
+      map.appendChild(d);
+    });
+  }
+
+  function renderArQuestion() {
+    const q = arActiveQuestions[arCurrentIndex];
+    document.getElementById('arCurrentQ').textContent = 'السؤال ' + (arCurrentIndex + 1);
+    document.getElementById('arQuestionText').textContent = q.q;
+    const choicesDiv = document.getElementById('arChoices');
+    choicesDiv.innerHTML = '';
+    const letters = ['أ', 'ب', 'ج', 'د'];
+    q.options.forEach((opt, i) => {
+      const d = document.createElement('div');
+      d.className = 'exam-choice';
+      if (arUserAnswers[arCurrentIndex] === i) d.classList.add('selected');
+      d.innerHTML = `<div class="choice-letter">${letters[i]}</div>${opt}`;
+      d.onclick = () => { arUserAnswers[arCurrentIndex] = i; renderArQuestion(); };
+      choicesDiv.appendChild(d);
+    });
+    document.getElementById('arBtnPrev').disabled = arCurrentIndex === 0;
+    const nextBtn = document.getElementById('arBtnNext');
+    if (arCurrentIndex === arActiveQuestions.length - 1) {
+      nextBtn.textContent = 'إنهاء ✓';
+      nextBtn.onclick = showArabicResults;
+    } else {
+      nextBtn.textContent = 'التالي →';
+      nextBtn.onclick = arNextQ;
+    }
+    // update map
+    const items = document.getElementById('arQuestionsMap').children;
+    let answered = 0;
+    for (let i = 0; i < items.length; i++) {
+      items[i].className = 'qmap-item';
+      if (arUserAnswers[i] !== null) { items[i].classList.add('answered'); answered++; }
+      if (i === arCurrentIndex) items[i].classList.add('current');
+    }
+    document.getElementById('arAnsweredCount').textContent = answered;
+    const pct = Math.round((answered / arActiveQuestions.length) * 100);
+    document.getElementById('arProgressFill').style.width = pct + '%';
+  }
+
+  function arNextQ() { if (arCurrentIndex < arActiveQuestions.length - 1) { arCurrentIndex++; renderArQuestion(); } }
+  function arPrevQ() { if (arCurrentIndex > 0) { arCurrentIndex--; renderArQuestion(); } }
+
+  function showArabicResults() {
+    let score = 0;
+    arUserAnswers.forEach((a, i) => { if (a === arActiveQuestions[i].ans) score++; });
+    const pct = Math.round((score / arActiveQuestions.length) * 100);
+    document.getElementById('finalScoreText').textContent = pct;
+    document.getElementById('resultsOverlay').classList.add('show');
+    // Override back button to go to arabic page
+    document.querySelector('#resultsOverlay .btn-blue').onclick = () => {
+      document.getElementById('resultsOverlay').classList.remove('show');
+      showPage('arabic');
+    };
+    document.querySelector('#resultsOverlay .btn-gold').onclick = () => {
+      document.getElementById('resultsOverlay').classList.remove('show');
+      startArabicExam(arActiveQuestions === arabicQuestionsBank.grammar ? 'grammar' : arActiveQuestions === arabicQuestionsBank.literature ? 'literature' : 'full');
+    };
   }
 
   // ===== SLIDESHOW =====
