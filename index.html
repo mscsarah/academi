@@ -923,6 +923,7 @@
 <div class="navbar-links">
 <button class="active" id="nav-landing" onclick="showPage('landing')">الرئيسية</button>
 <button id="nav-stages" onclick="showPage('stages')">المراحل الدراسية</button>
+<button id="nav-scientific" onclick="showPage('scientific')">المواد</button>
 <button id="nav-pricing" onclick="showPage('pricing')">الاشتراكات</button>
 <button id="nav-dashboard" onclick="showPage('dashboard')">لوحة الطالب</button>
 <button id="nav-ai" onclick="showPage('ai')">🤖 الذكاء الاصطناعي</button>
@@ -980,7 +981,7 @@
 <p style="animation:fadeUp 0.8s ease 0.6s both;">كل الأسئلة الوزارية، الشروحات المفصلة، والاختبارات التفاعلية - في مكان واحد. مصمّم خصيصاً لطلاب العراق بكل مراحلهم الدراسية.</p>
 <div class="hero-btns" style="animation:fadeUp 0.8s ease 0.8s both;">
 <button class="btn btn-blue btn-lg" onclick="showPage('stages')">🚀 ابدأ الآن مجاناً</button>
-<button class="btn btn-gold" onclick="showPage('stages')">📚 استعرض المراحل</button>
+<button class="btn btn-gold" onclick="showPage('scientific')">📚 استعرض المواد</button>
 <button class="btn btn-outline" onclick="showModal('loginModal')">تسجيل الدخول</button>
 </div>
 <div class="hero-stats">
@@ -1543,7 +1544,7 @@
 <div class="exam-meta-bar">
 <div class="exam-meta-item"><span class="exam-meta-icon">📋</span> <span id="totalQuestionsCount">١٠</span> أسئلة</div>
 <div class="exam-timer-big" id="examTimer">٤٤:٥٩</div>
-<button class="btn btn-outline btn-sm" onclick="showPage('subject')">✕ إنهاء</button>
+<button class="btn btn-outline btn-sm" onclick="showPage('scientific')">✕ إنهاء</button>
 </div>
 </div>
 <div class="exam-body">
@@ -1599,13 +1600,13 @@
 <div class="dash-stage">السادس المهني • بغداد</div>
 </div>
 <nav class="dash-nav">
-<button class="btn btn-blue w-full mb-4" onclick="showPage('stages')" style="justify-content: center;">
+<button class="btn btn-blue w-full mb-4" onclick="showPage('scientific')" style="justify-content: center;">
   ✨ استعراض المواد (3D)
 </button>
 <div class="dash-nav-section">
 <div class="dash-nav-section-title">الرئيسية</div>
 <button class="dash-nav-item active"><span class="nav-icon">📊</span> نظرة عامة</button>
-<button class="dash-nav-item" onclick="showPage('subject')"><span class="nav-icon">📄</span> الامتحان الوزاري</button>
+<button class="dash-nav-item" onclick="showPage('scientific')"><span class="nav-icon">📄</span> الامتحان الوزاري</button>
 </div>
 </nav>
 <div class="dash-sidebar-footer">
@@ -1744,7 +1745,7 @@
 <div class="results-title">🎉 أحسنت! اكتمل الاختبار</div>
 <div class="results-sub">لقد قمت بإتمام الاختبار الشامل.</div>
 <div class="results-btns mt-8">
-<button class="btn btn-blue" onclick="document.getElementById('resultsOverlay').classList.remove('show'); showPage('subject')">📚 العودة للمواد</button>
+<button class="btn btn-blue" onclick="document.getElementById('resultsOverlay').classList.remove('show'); showPage('scientific')">📚 العودة للمواد</button>
 <button class="btn btn-gold text-black" onclick="document.getElementById('resultsOverlay').classList.remove('show'); startDynamicExam()">🔄 إعادة الاختبار</button>
 </div>
 </div>
