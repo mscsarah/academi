@@ -2447,10 +2447,21 @@
   }
 
 </style>
-<!-- Firebase SDK -->
+<!-- Firebase SDK + Authentication -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    updateProfile,
+    GoogleAuthProvider,
+    signInWithPopup
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCEjkP8iKoK59WHFdQkQqsWtKUrzUwcoH4",
@@ -2464,13 +2475,100 @@
 
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const googleProvider = new GoogleAuthProvider();
 
-  // Expose for use in other scripts
+  // Expose to global scope
   window.firebaseApp = app;
+  window.firebaseAuth = auth;
   window.firebaseAnalytics = analytics;
   window.logFirebaseEvent = (name, params) => logEvent(analytics, name, params || {});
 
-  // Track page views automatically when showPage is called
+  // Map Firebase error codes to Arabic messages
+  function arabicError(code) {
+    const messages = {
+      'auth/email-already-in-use': 'هذا البريد مسجل مسبقاً',
+      'auth/invalid-email': 'البريد الإلكتروني غير صحيح',
+      'auth/operation-not-allowed': 'تسجيل الدخول بالبريد غير مفعّل',
+      'auth/weak-password': 'كلمة المرور ضعيفة جداً (6 أحرف على الأقل)',
+      'auth/user-disabled': 'هذا الحساب موقوف',
+      'auth/user-not-found': 'الحساب غير موجود',
+      'auth/wrong-password': 'كلمة المرور خاطئة',
+      'auth/invalid-credential': 'البريد أو كلمة المرور خاطئة',
+      'auth/too-many-requests': 'محاولات كثيرة، حاول لاحقاً',
+      'auth/network-request-failed': 'لا يوجد اتصال بالإنترنت',
+      'auth/popup-closed-by-user': 'تم إغلاق نافذة جوجل',
+      'auth/popup-blocked': 'المتصفح حجب النافذة المنبثقة',
+      'auth/missing-password': 'أدخل كلمة المرور',
+      'auth/missing-email': 'أدخل البريد الإلكتروني'
+    };
+    return messages[code] || 'حدث خطأ: ' + code;
+  }
+
+  // ─── SIGN UP ───
+  window.firebaseSignUp = async (email, password, displayName) => {
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      if (displayName) {
+        await updateProfile(cred.user, { displayName });
+      }
+      logEvent(analytics, 'sign_up', { method: 'email' });
+      return { success: true, user: cred.user };
+    } catch (e) {
+      return { success: false, error: arabicError(e.code) };
+    }
+  };
+
+  // ─── SIGN IN ───
+  window.firebaseSignIn = async (email, password) => {
+    try {
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      logEvent(analytics, 'login', { method: 'email' });
+      return { success: true, user: cred.user };
+    } catch (e) {
+      return { success: false, error: arabicError(e.code) };
+    }
+  };
+
+  // ─── GOOGLE SIGN IN ───
+  window.firebaseSignInGoogle = async () => {
+    try {
+      const cred = await signInWithPopup(auth, googleProvider);
+      logEvent(analytics, 'login', { method: 'google' });
+      return { success: true, user: cred.user };
+    } catch (e) {
+      return { success: false, error: arabicError(e.code) };
+    }
+  };
+
+  // ─── SIGN OUT ───
+  window.firebaseSignOut = async () => {
+    try {
+      await signOut(auth);
+      return { success: true };
+    } catch (e) {
+      return { success: false, error: arabicError(e.code) };
+    }
+  };
+
+  // ─── PASSWORD RESET ───
+  window.firebaseResetPassword = async (email) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      return { success: true };
+    } catch (e) {
+      return { success: false, error: arabicError(e.code) };
+    }
+  };
+
+  // ─── AUTH STATE OBSERVER ───
+  onAuthStateChanged(auth, (user) => {
+    if (typeof window.onAuthChange === 'function') {
+      window.onAuthChange(user);
+    }
+  });
+
+  // Track page view
   window.addEventListener('load', () => {
     logEvent(analytics, 'page_view', { page_title: document.title, page_location: window.location.href });
   });
@@ -3721,7 +3819,7 @@
         </div>
       </nav>
       <div class="dash-sidebar-footer">
-        <button class="dash-nav-item" onclick="showPage('landing')" style="color: var(--text-muted); font-size: 12px; justify-content: center; margin-bottom: 0;">
+        <button class="dash-nav-item" onclick="handleLogout()" style="color: var(--text-muted); font-size: 12px; justify-content: center; margin-bottom: 0;">
           <span class="nav-icon">🚪</span> خروج
         </button>
       </div>
@@ -3987,22 +4085,75 @@
   </div>
 </div>
 
-<!-- Login Modal -->
+<!-- Auth Modal (Login + Signup) -->
 <div class="modal-overlay" id="loginModal">
   <div class="modal-card">
     <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
     <div class="modal-logo">
       <div class="logo-icon" style="width:56px;height:56px;border-radius:14px;font-size:28px;margin:0 auto;background:linear-gradient(135deg,var(--accent-electric),var(--gold));display:flex;align-items:center;justify-content:center">🎓</div>
-      <h2>أهلاً بك في أرتق</h2>
-      <p>سجل دخولك لمتابعة التقدم</p>
+      <h2 id="authModalTitle">أهلاً بك في أرتق</h2>
+      <p id="authModalSubtitle">سجل دخولك لمتابعة التقدم</p>
     </div>
-    <div class="form-group">
-      <input class="form-input" placeholder="رقم الهاتف أو البريد" type="text"/>
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:8px;background:rgba(0,0,0,0.3);border:1px solid var(--glass-border);border-radius:10px;padding:5px;margin-bottom:20px;">
+      <button class="auth-tab-btn active" id="loginTabBtn" onclick="switchAuthTab('login')" style="flex:1;padding:10px;border-radius:7px;background:var(--accent-electric);border:none;color:white;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:var(--transition);">تسجيل الدخول</button>
+      <button class="auth-tab-btn" id="signupTabBtn" onclick="switchAuthTab('signup')" style="flex:1;padding:10px;border-radius:7px;background:none;border:none;color:var(--text-muted);font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:var(--transition);">حساب جديد</button>
     </div>
-    <div class="form-group">
-      <input class="form-input" placeholder="كلمة المرور" type="password"/>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <div class="form-group">
+        <input class="form-input" id="loginEmail" placeholder="البريد الإلكتروني" type="email" autocomplete="email"/>
+      </div>
+      <div class="form-group">
+        <input class="form-input" id="loginPassword" placeholder="كلمة المرور" type="password" autocomplete="current-password"/>
+      </div>
+      <div style="text-align:left;margin-bottom:14px;">
+        <a onclick="showResetPasswordForm()" style="font-size:12px;color:var(--accent-cyan);cursor:pointer;text-decoration:none;">نسيت كلمة المرور؟</a>
+      </div>
+      <div id="loginError" style="display:none;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px;"></div>
+      <button class="btn btn-blue w-full text-center" id="loginSubmitBtn" style="padding:12px;justify-content:center" onclick="handleLogin()">تسجيل الدخول</button>
     </div>
-    <button class="btn btn-blue w-full text-center" style="padding:12px;justify-content:center" onclick="closeModal('loginModal'); showPage('dashboard')">تسجيل الدخول</button>
+
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" style="display:none;">
+      <div class="form-group">
+        <input class="form-input" id="signupName" placeholder="الاسم الكامل" type="text" autocomplete="name"/>
+      </div>
+      <div class="form-group">
+        <input class="form-input" id="signupEmail" placeholder="البريد الإلكتروني" type="email" autocomplete="email"/>
+      </div>
+      <div class="form-group">
+        <input class="form-input" id="signupPassword" placeholder="كلمة المرور (6 أحرف على الأقل)" type="password" autocomplete="new-password"/>
+      </div>
+      <div id="signupError" style="display:none;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px;"></div>
+      <button class="btn btn-gold w-full text-center" id="signupSubmitBtn" style="padding:12px;justify-content:center" onclick="handleSignup()">إنشاء حساب</button>
+    </div>
+
+    <!-- RESET PASSWORD FORM -->
+    <div id="resetPasswordForm" style="display:none;">
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:14px;text-align:center;">سنرسل رابط استعادة كلمة المرور إلى بريدك الإلكتروني</p>
+      <div class="form-group">
+        <input class="form-input" id="resetEmail" placeholder="البريد الإلكتروني" type="email"/>
+      </div>
+      <div id="resetMessage" style="display:none;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px;"></div>
+      <button class="btn btn-blue w-full text-center" style="padding:12px;justify-content:center;margin-bottom:10px;" onclick="handleResetPassword()">إرسال رابط الاستعادة</button>
+      <button class="btn btn-outline w-full text-center" style="padding:10px;justify-content:center;" onclick="switchAuthTab('login')">← العودة لتسجيل الدخول</button>
+    </div>
+
+    <!-- DIVIDER + Google Sign In -->
+    <div id="googleAuthSection">
+      <div style="display:flex;align-items:center;gap:10px;margin:18px 0 14px;">
+        <div style="flex:1;height:1px;background:var(--glass-border);"></div>
+        <span style="font-size:12px;color:var(--text-muted);">أو</span>
+        <div style="flex:1;height:1px;background:var(--glass-border);"></div>
+      </div>
+      <button class="btn w-full text-center" style="padding:11px;justify-content:center;background:white;color:#333;font-weight:700;gap:10px;" onclick="handleGoogleLogin()">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        المتابعة باستخدام جوجل
+      </button>
+    </div>
   </div>
 </div>
 
@@ -4803,6 +4954,226 @@
       }
     }
   });
+
+
+  // ═══════════════════════════════════════
+  //  AUTH HANDLERS (Firebase)
+  // ═══════════════════════════════════════
+  function switchAuthTab(tab) {
+    document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+    document.getElementById('resetPasswordForm').style.display = tab === 'reset' ? 'block' : 'none';
+    document.getElementById('googleAuthSection').style.display = tab === 'reset' ? 'none' : 'block';
+
+    const loginBtn = document.getElementById('loginTabBtn');
+    const signupBtn = document.getElementById('signupTabBtn');
+    if (tab === 'login') {
+      loginBtn.style.background = 'var(--accent-electric)';
+      loginBtn.style.color = 'white';
+      signupBtn.style.background = 'none';
+      signupBtn.style.color = 'var(--text-muted)';
+      document.getElementById('authModalTitle').textContent = 'أهلاً بك في أرتق';
+      document.getElementById('authModalSubtitle').textContent = 'سجل دخولك لمتابعة التقدم';
+    } else if (tab === 'signup') {
+      signupBtn.style.background = 'var(--gold)';
+      signupBtn.style.color = 'var(--midnight)';
+      loginBtn.style.background = 'none';
+      loginBtn.style.color = 'var(--text-muted)';
+      document.getElementById('authModalTitle').textContent = 'انضم لأرتق';
+      document.getElementById('authModalSubtitle').textContent = 'ابدأ رحلتك التعليمية اليوم';
+    } else if (tab === 'reset') {
+      document.getElementById('authModalTitle').textContent = 'استعادة كلمة المرور';
+      document.getElementById('authModalSubtitle').textContent = '';
+    }
+    // Hide errors
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('signupError').style.display = 'none';
+    document.getElementById('resetMessage').style.display = 'none';
+  }
+
+  function showResetPasswordForm() {
+    switchAuthTab('reset');
+  }
+
+  function showAuthError(elId, msg) {
+    const el = document.getElementById(elId);
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  async function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errorEl = document.getElementById('loginError');
+    errorEl.style.display = 'none';
+
+    if (!email || !password) {
+      showAuthError('loginError', 'الرجاء إدخال البريد وكلمة المرور');
+      return;
+    }
+    if (!window.firebaseSignIn) {
+      showAuthError('loginError', 'جاري تحميل النظام، حاول بعد لحظة');
+      return;
+    }
+
+    const btn = document.getElementById('loginSubmitBtn');
+    btn.disabled = true;
+    btn.textContent = 'جاري تسجيل الدخول...';
+
+    const result = await window.firebaseSignIn(email, password);
+    btn.disabled = false;
+    btn.textContent = 'تسجيل الدخول';
+
+    if (result.success) {
+      closeModal('loginModal');
+      showPage('dashboard');
+    } else {
+      showAuthError('loginError', result.error);
+    }
+  }
+
+  async function handleSignup() {
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const errorEl = document.getElementById('signupError');
+    errorEl.style.display = 'none';
+
+    if (!name || !email || !password) {
+      showAuthError('signupError', 'الرجاء تعبئة جميع الحقول');
+      return;
+    }
+    if (password.length < 6) {
+      showAuthError('signupError', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+      return;
+    }
+    if (!window.firebaseSignUp) {
+      showAuthError('signupError', 'جاري تحميل النظام، حاول بعد لحظة');
+      return;
+    }
+
+    const btn = document.getElementById('signupSubmitBtn');
+    btn.disabled = true;
+    btn.textContent = 'جاري إنشاء الحساب...';
+
+    const result = await window.firebaseSignUp(email, password, name);
+    btn.disabled = false;
+    btn.textContent = 'إنشاء حساب';
+
+    if (result.success) {
+      closeModal('loginModal');
+      showPage('dashboard');
+    } else {
+      showAuthError('signupError', result.error);
+    }
+  }
+
+  async function handleGoogleLogin() {
+    if (!window.firebaseSignInGoogle) return;
+    const result = await window.firebaseSignInGoogle();
+    if (result.success) {
+      closeModal('loginModal');
+      showPage('dashboard');
+    } else {
+      const visibleForm = document.getElementById('signupForm').style.display !== 'none' ? 'signupError' : 'loginError';
+      showAuthError(visibleForm, result.error);
+    }
+  }
+
+  async function handleResetPassword() {
+    const email = document.getElementById('resetEmail').value.trim();
+    const msgEl = document.getElementById('resetMessage');
+    msgEl.style.display = 'none';
+
+    if (!email) {
+      msgEl.style.background = 'rgba(239,68,68,0.15)';
+      msgEl.style.borderColor = 'rgba(239,68,68,0.3)';
+      msgEl.style.color = '#fca5a5';
+      msgEl.textContent = 'الرجاء إدخال البريد الإلكتروني';
+      msgEl.style.display = 'block';
+      return;
+    }
+
+    if (!window.firebaseResetPassword) return;
+    const result = await window.firebaseResetPassword(email);
+
+    msgEl.style.display = 'block';
+    if (result.success) {
+      msgEl.style.background = 'rgba(16,185,129,0.15)';
+      msgEl.style.borderColor = 'rgba(16,185,129,0.3)';
+      msgEl.style.color = '#6ee7b7';
+      msgEl.textContent = '✓ تم إرسال رابط الاستعادة إلى بريدك';
+    } else {
+      msgEl.style.background = 'rgba(239,68,68,0.15)';
+      msgEl.style.borderColor = 'rgba(239,68,68,0.3)';
+      msgEl.style.color = '#fca5a5';
+      msgEl.textContent = result.error;
+    }
+  }
+
+  async function handleLogout() {
+    if (!window.firebaseSignOut) return;
+    await window.firebaseSignOut();
+    showPage('landing');
+  }
+
+  // ─── Auth state observer: update navbar based on login state ───
+  window.onAuthChange = function(user) {
+    const loginBtn = document.querySelector('.navbar-cta .btn-login');
+    const signupBtn = document.querySelector('.navbar-cta .btn-primary');
+    const navDashboard = document.getElementById('nav-dashboard');
+    const dashAvatar = document.querySelector('.dash-avatar');
+    const dashName = document.querySelector('.dash-name');
+    const dashStage = document.querySelector('.dash-stage');
+    const welcomeH1 = document.querySelector('.dash-welcome h1');
+
+    if (user) {
+      // Logged in
+      const displayName = user.displayName || user.email.split('@')[0];
+      const firstChar = displayName.charAt(0).toUpperCase();
+
+      // Replace navbar buttons with user avatar + logout
+      if (loginBtn) loginBtn.style.display = 'none';
+      if (signupBtn) {
+        signupBtn.textContent = '🚪 خروج';
+        signupBtn.onclick = handleLogout;
+        signupBtn.style.background = 'linear-gradient(135deg, var(--danger), #b91c1c)';
+        signupBtn.style.boxShadow = '0 4px 20px rgba(239,68,68,0.3)';
+      }
+
+      // Update dashboard sidebar
+      if (dashAvatar) dashAvatar.textContent = firstChar;
+      if (dashName) dashName.textContent = displayName;
+      if (welcomeH1) welcomeH1.innerHTML = 'مرحباً ' + displayName + ' 👋';
+
+      // Show "logged in as" indicator
+      if (navDashboard && !document.getElementById('userIndicator')) {
+        const indicator = document.createElement('span');
+        indicator.id = 'userIndicator';
+        indicator.style.cssText = 'display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:8px;color:#6ee7b7;font-size:12px;font-weight:700;margin-left:8px;';
+        indicator.innerHTML = '<span style="width:6px;height:6px;border-radius:50%;background:#10b981;"></span>' + displayName;
+        const cta = document.querySelector('.navbar-cta');
+        if (cta) cta.insertBefore(indicator, cta.firstChild);
+      } else if (document.getElementById('userIndicator')) {
+        document.getElementById('userIndicator').lastChild.textContent = displayName;
+      }
+
+      // Auto-open exam button onclick for dashboard exam
+      window.currentUser = user;
+    } else {
+      // Logged out
+      if (loginBtn) loginBtn.style.display = '';
+      if (signupBtn) {
+        signupBtn.textContent = 'ابدأ مجانًا';
+        signupBtn.onclick = () => showModal('loginModal');
+        signupBtn.style.background = '';
+        signupBtn.style.boxShadow = '';
+      }
+      const indicator = document.getElementById('userIndicator');
+      if (indicator) indicator.remove();
+      window.currentUser = null;
+    }
+  };
 
   // ═══════════════════════════════════════
   //  INIT ALL
