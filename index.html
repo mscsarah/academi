@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>أرتق - منصة التعليم الذكية</title>
-<meta name="description" content="أرتق - منصة تعليمية ذكية تجمع الأسئلة الوزارية والاختبارات والذكاء الاصطناعي في تجربة تعليمية استثنائية للطلاب العراقيين"/>
+<title>أكاديمية العراق الأولى - منصة التعليم الذكية</title>
+<meta name="description" content="أكاديمية العراق الأولى - منصة تعليمية ذكية تجمع الأسئلة الوزارية والاختبارات والذكاء الاصطناعي في تجربة تعليمية استثنائية للطلاب العراقيين"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -273,18 +273,6 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease-out;
-  }
-
-  /* Google Drive iframe video */
-  .hero-video-container iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    pointer-events: none;
-    /* Scale up to hide Drive player controls at edges */
-    transform: scale(1.08);
   }
 
   .hero-video-container::after {
@@ -2523,15 +2511,13 @@
   <!-- ═══════════════════════════════════════
        HERO SECTION
        ═══════════════════════════════════════ -->
-  <section class="hero slideshow-active" id="heroSection">
-    <!-- Video Background — Google Drive -->
+  <section class="hero video-active" id="heroSection">
+    <!-- Video Background -->
     <div class="hero-video-container" id="heroVideoContainer">
-      <iframe id="heroVideoFrame"
-        src="https://drive.google.com/file/d/1ZuTuJNVcpwJp1YB-nyIdVcuRwy80jK2F/preview"
-        style="width:100%;height:100%;border:none;pointer-events:none;position:absolute;inset:0;"
-        allow="autoplay"
-        allowfullscreen>
-      </iframe>
+      <video id="heroVideo" autoplay muted loop playsinline preload="auto">
+        <source src="./hero-video.mp4" type="video/mp4">
+        <source src="./images/hero-video.mp4" type="video/mp4">
+      </video>
     </div>
 
     <!-- Slideshow Fallback -->
@@ -4085,16 +4071,16 @@
   }
 
   function revealHeroAnimations() {
+    // Arabic text — animate the whole h1 (char-by-char breaks RTL)
     const headline = document.querySelector('.hero-headline h1');
     if (headline) {
-      const chars = splitTextToChars(headline);
-      chars.forEach((char, index) => {
-        setTimeout(() => {
-          char.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          char.style.opacity = '1';
-          char.style.transform = 'translateY(0) rotateX(0)';
-        }, 400 + index * 30);
-      });
+      headline.style.opacity = '0';
+      headline.style.transform = 'translateY(30px)';
+      setTimeout(() => {
+        headline.style.transition = 'all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        headline.style.opacity = '1';
+        headline.style.transform = 'translateY(0)';
+      }, 400);
     }
 
     // Badge
@@ -4213,20 +4199,54 @@
   //  VIDEO ERROR FALLBACK
   // ═══════════════════════════════════════
   (function initVideoFallback() {
+    const video = document.getElementById('heroVideo');
     const heroSection = document.getElementById('heroSection');
-    const iframe = document.getElementById('heroVideoFrame');
-    if (!heroSection) return;
+    if (!video || !heroSection) {
+      // No video element — use slideshow
+      if (heroSection) {
+        heroSection.classList.remove('video-active');
+        heroSection.classList.add('slideshow-active');
+      }
+      startAutoPlay();
+      return;
+    }
 
-    if (iframe) {
-      // Google Drive iframe — switch to video-active immediately
+    let videoLoaded = false;
+
+    // Video loaded successfully
+    video.addEventListener('loadeddata', () => {
+      videoLoaded = true;
       heroSection.classList.add('video-active');
       heroSection.classList.remove('slideshow-active');
-    } else {
-      // No iframe — use slideshow
+      video.play().catch(() => {});
+    });
+
+    // Video failed — switch to slideshow
+    video.addEventListener('error', () => {
       heroSection.classList.remove('video-active');
       heroSection.classList.add('slideshow-active');
       startAutoPlay();
-    }
+    });
+
+    // Source error — also fall back
+    const sources = video.querySelectorAll('source');
+    sources.forEach(s => s.addEventListener('error', () => {
+      // Only fall back if NO source worked
+      if (!videoLoaded && s === sources[sources.length - 1]) {
+        heroSection.classList.remove('video-active');
+        heroSection.classList.add('slideshow-active');
+        startAutoPlay();
+      }
+    }));
+
+    // Hard timeout — 4s
+    setTimeout(() => {
+      if (!videoLoaded) {
+        heroSection.classList.remove('video-active');
+        heroSection.classList.add('slideshow-active');
+        startAutoPlay();
+      }
+    }, 4000);
   })();
 
   // ═══════════════════════════════════════
