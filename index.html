@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>أرتق - منصة التعليم العراقية الذكية | أكاديمية العراق الأولى</title>
-<meta name="description" content="أرتق - منصة تعليمية ذكية تجمع الأسئلة الوزارية والاختبارات والذكاء الاصطناعي في تجربة تعليمية استثنائية للطلاب العراقيين"/>
+<title>أكاديمية العراق الأولى - منصة التعليم الذكية</title>
+<meta name="description" content="أكاديمية العراق الأولى - منصة تعليمية ذكية تجمع الأسئلة الوزارية والاختبارات والذكاء الاصطناعي في تجربة تعليمية استثنائية للطلاب العراقيين"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -273,6 +273,18 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease-out;
+  }
+
+  /* Google Drive iframe video */
+  .hero-video-container iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none;
+    /* Scale up to hide Drive player controls at edges */
+    transform: scale(1.08);
   }
 
   .hero-video-container::after {
@@ -2454,7 +2466,7 @@
      PRELOADER
      ═══════════════════════════════════════ -->
 <div class="preloader" id="preloader">
-  <div class="preloader-logo">أرتق</div>
+  <div class="preloader-logo">🎓</div>
   <div class="preloader-bar">
     <div class="preloader-bar-fill"></div>
   </div>
@@ -2512,13 +2524,14 @@
        HERO SECTION
        ═══════════════════════════════════════ -->
   <section class="hero slideshow-active" id="heroSection">
-    <!-- Video Background -->
-    <div class="hero-video-container">
-      <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="">
-        <source src="./hero-video.mp4" type="video/mp4">
-        <source src="./images/hero-video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+    <!-- Video Background — Google Drive -->
+    <div class="hero-video-container" id="heroVideoContainer">
+      <iframe id="heroVideoFrame"
+        src="https://drive.google.com/file/d/1ZuTuJNVcpwJp1YB-nyIdVcuRwy80jK2F/preview"
+        style="width:100%;height:100%;border:none;pointer-events:none;position:absolute;inset:0;"
+        allow="autoplay"
+        allowfullscreen>
+      </iframe>
     </div>
 
     <!-- Slideshow Fallback -->
@@ -2768,7 +2781,7 @@
        ═══════════════════════════════════════ -->
   <div class="section why-arty-section">
     <div class="section-header gs-reveal">
-      <span class="section-tag">🌟 لماذا أرتق</span>
+      <span class="section-tag">🌟 لماذا الأكاديمية</span>
       <h2 class="section-title">ميزات <span>تفوق التوقعات</span></h2>
       <p class="section-sub">تجربة تعليمية استثنائية مدعومة بأحدث التقنيات</p>
     </div>
@@ -2811,7 +2824,7 @@
        ═══════════════════════════════════════ -->
   <div class="section ai-showcase">
     <div class="section-header gs-reveal">
-      <span class="section-tag">🤖 مساعد أرتق الذكي</span>
+      <span class="section-tag">🤖 مساعد الأكاديمية الذكي</span>
       <h2 class="section-title">ذكاء اصطناعي <span style="color:var(--accent-cyan)">لتفوقك الدراسي</span></h2>
       <p class="section-sub">مساعدك الشخصي الذكي على مدار الساعة — اسأله ما تشاء</p>
     </div>
@@ -2844,7 +2857,7 @@
       <div class="ai-holo-panel gs-reveal">
         <div class="ai-chat-header">
           <span style="font-size:20px">🤖</span>
-          <span class="ai-chat-title">مساعد أرتق الذكي</span>
+          <span class="ai-chat-title">مساعد الأكاديمية الذكي</span>
           <div class="ai-live-dot"></div>
           <span style="font-size:11px;color:var(--success);margin-right:auto">متصل</span>
         </div>
@@ -2872,7 +2885,7 @@
       <div class="stat-item-big">
         <div class="num"><span data-counter="15000" data-suffix="+">0</span></div>
         <div class="label">طالب نشط</div>
-        <div class="sub">يثقون بمنصة أرتق</div>
+        <div class="sub">يثقون بالأكاديمية</div>
       </div>
       <div class="stat-item-big">
         <div class="num"><span data-counter="8500" data-suffix="+">0</span></div>
@@ -2899,13 +2912,13 @@
     <div class="section-header gs-reveal">
       <span class="section-tag">💬 قصص النجاح</span>
       <h2 class="section-title">آراء <span>طلابنا المتميزين</span></h2>
-      <p class="section-sub">شاهد كيف غيّرت أرتق مسيرة طلاب العراق الدراسية</p>
+      <p class="section-sub">شاهد كيف غيّرت الأكاديمية مسيرة طلاب العراق الدراسية</p>
     </div>
     <div class="testimonials-wrapper">
       <div class="testimonials-track" id="testimonialsTrack">
         <div class="testimonial-card">
           <div class="tc-stars">★★★★★</div>
-          <div class="tc-text">"أرتق غيّرت طريقة دراستي بالكامل. الأسئلة الوزارية المنظمة والاختبارات التفاعلية ساعدتني أحصل على معدل ٩٥% في السادس الإعدادي!"</div>
+          <div class="tc-text">"الأكاديمية غيّرت طريقة دراستي بالكامل. الأسئلة الوزارية المنظمة والاختبارات التفاعلية ساعدتني أحصل على معدل ٩٥% في السادس الإعدادي!"</div>
           <div class="tc-author">
             <div class="tc-avatar">م</div>
             <div>
@@ -2938,7 +2951,7 @@
         </div>
         <div class="testimonial-card">
           <div class="tc-stars">★★★★★</div>
-          <div class="tc-text">"منصة أرتق كانت السبب الرئيسي بنجاحي. تتبع التقدم ساعدني أعرف نقاط ضعفي وأركز عليها."</div>
+          <div class="tc-text">"الأكاديمية كانت السبب الرئيسي بنجاحي. تتبع التقدم ساعدني أعرف نقاط ضعفي وأركز عليها."</div>
           <div class="tc-author">
             <div class="tc-avatar">ن</div>
             <div>
@@ -2949,7 +2962,7 @@
         </div>
         <div class="testimonial-card">
           <div class="tc-stars">★★★★★</div>
-          <div class="tc-text">"أفضل منصة تعليمية في العراق بلا منازع. المحتوى المحدث والأسئلة الوزارية الشاملة لا تُضاهى."</div>
+          <div class="tc-text">"أفضل أكاديمية تعليمية في العراق بلا منازع. المحتوى المحدث والأسئلة الوزارية الشاملة لا تُضاهى."</div>
           <div class="tc-author">
             <div class="tc-avatar">أ</div>
             <div>
@@ -2960,7 +2973,7 @@
         </div>
         <div class="testimonial-card">
           <div class="tc-stars">★★★★★</div>
-          <div class="tc-text">"اشتراكي في أرتق كان أفضل استثمار دراسي. النتائج تتكلم — معدل ٩٧% وتقدمت للجامعة!"</div>
+          <div class="tc-text">"اشتراكي في الأكاديمية كان أفضل استثمار دراسي. النتائج تتكلم — معدل ٩٧% وتقدمت للجامعة!"</div>
           <div class="tc-author">
             <div class="tc-avatar">س</div>
             <div>
@@ -2990,7 +3003,7 @@
   <div class="section">
     <div class="section-header gs-reveal">
       <span class="section-tag">📱 تعلم في أي مكان</span>
-      <h2 class="section-title">أرتق <span style="color:var(--accent-cyan)">معك أينما كنت</span></h2>
+      <h2 class="section-title">الأكاديمية <span style="color:var(--accent-cyan)">معك أينما كنت</span></h2>
       <p class="section-sub">تعلم على أي جهاز — هاتف، تابلت، أو كمبيوتر</p>
     </div>
     <div class="devices-showcase gs-reveal">
@@ -2998,7 +3011,7 @@
         <div class="device-screen">
           <div class="device-screen-content">
             <div class="ds-navbar">
-              <span class="ds-logo">🎓 أ<span>رتق</span></span>
+              <span class="ds-logo">🎓 أ<span>كاديمية</span></span>
               <span style="font-size:10px;color:var(--text-muted)">←</span>
             </div>
             <div class="ds-card">
@@ -3023,7 +3036,7 @@
         <div class="device-screen">
           <div class="device-screen-content">
             <div class="ds-navbar">
-              <span class="ds-logo">🎓 أ<span>رتق</span></span>
+              <span class="ds-logo">🎓 أ<span>كاديمية</span></span>
             </div>
             <div class="ds-card">
               <div class="ds-card-title">🕋 التربية الإسلامية</div>
@@ -3129,7 +3142,7 @@
       <div class="cta-glow-1"></div>
       <div class="cta-glow-2"></div>
       <h2>ابدأ رحلة <span style="color:var(--gold)">التفوق الدراسي</span> اليوم</h2>
-      <p>انضم لأكثر من 15,000 طالب يثقون بمنصة أرتق وحقق أحلامك الدراسية</p>
+      <p>انضم لأكثر من 15,000 طالب يثقون بالأكاديمية وحقق أحلامك الدراسية</p>
       <div class="cta-btns">
         <button class="btn btn-blue btn-lg" onclick="showPage('stages')">🚀 ابدأ مجاناً</button>
         <button class="btn btn-outline" onclick="showModal('loginModal')">تسجيل الدخول</button>
@@ -3147,7 +3160,7 @@
           <span style="font-size:28px">🎓</span>
           أكاديمية العراق<span> الأولى</span>
         </div>
-        <p>أكاديمية العراق الأولى — منصة أرتق التعليمية. نقدم تجربة تعليمية متكاملة للطلاب العراقيين بكل المراحل الدراسية.</p>
+        <p>أكاديمية العراق الأولى — نقدم تجربة تعليمية متكاملة للطلاب العراقيين بكل المراحل الدراسية.</p>
       </div>
       <div class="footer-col">
         <h4>المنصة</h4>
@@ -3179,7 +3192,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      © 2026 أكاديمية العراق الأولى — منصة أرتق. جميع الحقوق محفوظة.
+      © 2026 أكاديمية العراق الأولى. جميع الحقوق محفوظة.
     </div>
   </footer>
 
@@ -3899,7 +3912,7 @@
       <div class="ai-holo-panel">
         <div class="ai-chat-header">
           <span style="font-size:20px">🤖</span>
-          <span class="ai-chat-title">مساعد أرتق الذكي</span>
+          <span class="ai-chat-title">مساعد الأكاديمية الذكي</span>
           <div class="ai-live-dot"></div>
           <span style="font-size:11px;color:var(--success);margin-right:auto">متصل</span>
         </div>
@@ -3966,7 +3979,7 @@
     <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
     <div class="modal-logo">
       <div class="logo-icon" style="width:56px;height:56px;border-radius:14px;font-size:28px;margin:0 auto;background:linear-gradient(135deg,var(--accent-electric),var(--gold));display:flex;align-items:center;justify-content:center">🎓</div>
-      <h2>أهلاً بك في أرتق</h2>
+      <h2>أهلاً بك في الأكاديمية</h2>
       <p>سجل دخولك لمتابعة التقدم</p>
     </div>
     <div class="form-group">
@@ -3987,6 +4000,15 @@
   //  GSAP & ScrollTrigger Registration
   // ═══════════════════════════════════════
   gsap.registerPlugin(ScrollTrigger);
+
+  // ═══════════════════════════════════════
+  //  SLIDESHOW VARIABLES (hoisted to top to prevent TDZ errors)
+  // ═══════════════════════════════════════
+  var currentSlide = 0;
+  var totalSlides = 10;
+  var slideInterval = null;
+  var SLIDE_DURATION = 5000;
+  var arabicNums = ['١','٢','٣','٤','٥','٦','٧','٨','٩','١٠'];
 
   // Forward declaration stubs (implemented later in file)
   function closeMobileMenu() {
@@ -4191,33 +4213,20 @@
   //  VIDEO ERROR FALLBACK
   // ═══════════════════════════════════════
   (function initVideoFallback() {
-    const video = document.getElementById('heroVideo');
     const heroSection = document.getElementById('heroSection');
-    if (!video || !heroSection) return;
+    const iframe = document.getElementById('heroVideoFrame');
+    if (!heroSection) return;
 
-    // Start slideshow immediately as default
-    startAutoPlay();
-
-    // Switch to video if it loads successfully
-    video.addEventListener('canplay', () => {
+    if (iframe) {
+      // Google Drive iframe — switch to video-active immediately
       heroSection.classList.add('video-active');
       heroSection.classList.remove('slideshow-active');
-    });
-
-    // Keep slideshow on error
-    video.addEventListener('error', () => {
+    } else {
+      // No iframe — use slideshow
       heroSection.classList.remove('video-active');
       heroSection.classList.add('slideshow-active');
-    });
-
-    // Timeout fallback: if video doesn't load in 4s, keep slideshow
-    const videoTimeout = setTimeout(() => {
-      if (heroSection.classList.contains('slideshow-active')) {
-        // already on slideshow, fine
-      }
-    }, 4000);
-
-    video.addEventListener('canplay', () => clearTimeout(videoTimeout));
+      startAutoPlay();
+    }
   })();
 
   // ═══════════════════════════════════════
@@ -4444,11 +4453,7 @@
   // ═══════════════════════════════════════
   //  SLIDESHOW (FALLBACK)
   // ═══════════════════════════════════════
-  let currentSlide = 0;
-  const totalSlides = 10;
-  let slideInterval = null;
-  const SLIDE_DURATION = 5000;
-  const arabicNums = ['١','٢','٣','٤','٥','٦','٧','٨','٩','١٠'];
+  /* variables declared at top of script — see below */
 
   function goToSlide(index) {
     const slides = document.querySelectorAll('.hero-slideshow .slide');
